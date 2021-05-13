@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { LoggerService } from 'src/app/services/logger/logger.service';
 import { ProbabilityCalculatorService } from 'src/app/services/probability-calculator/probability-calculator.service';
 import { ICalculation } from './icalculation.interface';
 
@@ -31,7 +32,8 @@ export class ProbabilityCalculatorComponent {
   ];
 
   constructor(
-    private readonly probabilityCalculatorService: ProbabilityCalculatorService
+    private readonly probabilityCalculatorService: ProbabilityCalculatorService,
+    private readonly loggerService: LoggerService
   ) {
     this.selectedCalculation = this.availableCalculations[0];
   }
@@ -46,5 +48,14 @@ export class ProbabilityCalculatorComponent {
       this.probabilityA,
       this.probabilityB
     );
+
+    // A problem with this approach is that it logs "work in progress" calcluations.
+    // For the purpose of this demo, left as is, because I like the result generation 
+    // on the fly, (rather than adding a "Calculate" button).
+    this.loggerService.logCalculation(
+      this.selectedCalculation.name,
+      this.probabilityA,
+      this.probabilityB,
+      this.result);
   }
 }
