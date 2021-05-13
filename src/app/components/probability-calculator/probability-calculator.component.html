@@ -1,0 +1,29 @@
+<form #calculatorForm="ngForm">
+    <!-- Collect the probabilities -->
+    <div class="form-inline mb-1">
+      <label for="probA">Probability A</label>
+      <div class="col-sm-2">
+        <input type="number" class="form-control" name="probA" id="probA" #probA="ngModel" [(ngModel)]="probabilityA" (ngModelChange)="parameterChange()" required min="0" max="1" />
+      </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="!probA.valid">Please enter a valid probability, between 0 and 1.</div>
+    <div class="form-inline mb-1">
+      <label for="probB">Probability B</label>
+      <div class="col-sm-4">
+        <input type="number" class="form-control" name="probB" id="probB" #probB="ngModel" [(ngModel)]="probabilityB" (ngModelChange)="parameterChange()" required min="0" max="1" />
+      </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="!probB.valid">Please enter a valid probability, between 0 and 1.</div>
+
+    <!-- List out the available calculations -->
+    <div class="form-check" *ngFor="let calculation of availableCalculations">
+        <input type="radio" [value]="calculation" name="calculationType" [(ngModel)]="selectedCalculation" class="form-check-input" [id]="calculation.name" (ngModelChange)="parameterChange()" />
+        <label class="form-check-label" [attr.for]="calculation.name">
+            {{ calculation.description }}
+        </label>
+      </div>
+</form>
+
+<!-- Display the result -->
+<hr class="my-4">
+<p class="lead">Calculated Probability: {{ result }}</p>
