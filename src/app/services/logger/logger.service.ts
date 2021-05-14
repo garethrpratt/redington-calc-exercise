@@ -11,6 +11,7 @@ export class LoggerService {
     const existingStringified = localStorage.getItem(this.historicalCalculationsKey) ?? '[]';
     const historicalCalculations = JSON.parse(existingStringified);
     historicalCalculations.push({
+      date: new Date(),
       type,
       probabilityA,
       probabilityB,
